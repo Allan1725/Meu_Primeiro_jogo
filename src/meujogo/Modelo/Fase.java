@@ -73,7 +73,11 @@ public class Fase extends JPanel implements ActionListener {
 			Enemy1 in = enemy1.get(o);
 			in.load();
 			graficos.drawImage(in.getImagem(), in.getX(), in.getY(), this);
+		}
+}
 			else {
+				ImageIcon fimJogo = new ImageIcon("res\\gameover.png");
+				graficos.drawImage(fimJogo.getImage(),0, 0, null);
 		}
 		
 		g.dispose();
@@ -102,6 +106,7 @@ public class Fase extends JPanel implements ActionListener {
 				
 			}
 		}
+		checarColisoes();
 		repaint();
 
 	}
@@ -118,9 +123,26 @@ public class Fase extends JPanel implements ActionListener {
 				if(formaNave.intersects(formaEnemy1)) {
 					player.setVisivel(false);
 					tempEnemy1.setVisivel(false);
+					emJogo = false;
 				}
+		}
+		
+		List<Tiro> tiros = player.getTiros();
+		for (int j = 0; j < tiros.size(); j++) {
+			Tiro tempTiro = tiros.get(j);
+			formaTiro = tempTiro.getBounds();
+			for (int o = 0; o < enemy1.size(); o++) {
+				Enemy1 tempEnemy1 = enemy1.get(o);
+				formaEnemy1 = tempEnemy1.getBounds();
+				if(formaTiro.intersects(formaEnemy1)) {
+					tempEnemy1.setVisivel(false);
+					tempTiro.setVisivel(false);
+				}
+				
+			}
 			
 		}
+		
 	}
 	
 
